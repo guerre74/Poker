@@ -1,8 +1,13 @@
 import java.util.Comparator;
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DeckTester.
+ */
 public class DeckTester {
 
+    /** The hands to test. */
     static String[] handsToTest = {
             "3h 4s 5h 6d 7c",
             "3h 4h 5h 6h 7h",
@@ -12,6 +17,9 @@ public class DeckTester {
             "Ah Ad 2c 4s 3h"
         };
 
+    /**
+     * Test.
+     */
     public static void test() {
         System.out.print('\u000C');
         for(String handString: handsToTest) {
@@ -19,6 +27,11 @@ public class DeckTester {
         }
     }
 
+    /**
+     * Test string.
+     *
+     * @param s the string value of the hand
+     */
     public static void testString(String s) {
         Hand hand = Hand.fromString(s);
         System.out.println("Testing hand:\n" + hand.toString() + "\n");
@@ -34,6 +47,11 @@ public class DeckTester {
         runTest(hand, "Highest patt. ", hand.getHighestPattern());
     }
 
+    /**
+     * Test random hands.
+     *
+     * @param n the number of hands to test
+     */
     public static void testRandomHands(int n) {
         System.out.print('\u000C');
         ArrayList<Hand> a = new ArrayList<>();
@@ -52,6 +70,13 @@ public class DeckTester {
         }
     }
 
+    /**
+     * Run test.
+     *
+     * @param hand the hand
+     * @param label the label
+     * @param value the value
+     */
     static void runTest(Hand hand, String label, Object value) {
         System.out.println("\t" + label + ": " + value + "\n");
     }

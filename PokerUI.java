@@ -14,16 +14,35 @@ import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PokerUI.
+ */
 public class PokerUI {
 
+	/** The Constant NUM_PLAYERS. */
 	final static int NUM_PLAYERS = 3;
+	
+	/** The Constant NUM_DECKS. */
 	final static int NUM_DECKS = 1;
+	
+	/** The Constant WINDOW_PADDING. */
 	final static int WINDOW_PADDING = 10;
+	
+	/** The Constant ENVIRONMENT_BLUEJ. */
 	final static int ENVIRONMENT_BLUEJ = 0;
+	
+	/** The Constant ENVIRONMENT_ECLIPSE. */
 	final static int ENVIRONMENT_ECLIPSE = 1;
 
+	/** The Constant CURRENT_ENVIRONMENT. */
 	final static int CURRENT_ENVIRONMENT = ENVIRONMENT_BLUEJ;
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		JFrame pokerFrame = new JFrame();
 		GridLayout layout = new GridLayout(NUM_PLAYERS, 1);
@@ -122,6 +141,13 @@ public class PokerUI {
 
 	}
 
+	/**
+	 * Render UI.
+	 *
+	 * @param pokerFrame the poker frame
+	 * @param poker the poker
+	 * @return the list
+	 */
 	static List<PlayerPane> renderUI(JFrame pokerFrame, Poker poker) {
 		List<PlayerPane> toReturn = new ArrayList<>();
 		for (int i = 0; i < NUM_PLAYERS; i++) {

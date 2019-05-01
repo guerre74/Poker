@@ -1,6 +1,15 @@
 import java.util.List;
 import java.util.ArrayList;
+// TODO: Auto-generated Javadoc
+
+/**
+ * The Class ComputerPlayer.
+ */
 public class ComputerPlayer extends Player {
+    
+    /* (non-Javadoc)
+     * @see Player#discard(Poker)
+     */
     public List<Card> discard(Poker poker) {
         List<Card> toDiscard = new ArrayList<>();
         Pattern highestPattern = getHand().getHighestPattern();
@@ -29,7 +38,6 @@ public class ComputerPlayer extends Player {
                     
         }
         for(Card card : toDiscard) {
-            System.out.println(getName() + ": Discarding " + card.toString());
         }
         return toDiscard;
     }

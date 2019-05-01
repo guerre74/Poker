@@ -1,6 +1,12 @@
+// TODO: Auto-generated Javadoc
+/**
+ * Enum Pattern.
+ */
 public enum Pattern
 {
-    NONE {
+    
+    /** none. */
+    NONE("High card") {
         public boolean matches(Hand hand) {
             return true;
         }
@@ -8,7 +14,9 @@ public enum Pattern
             return PatternMatcher.highCard(a).compareTo(PatternMatcher.highCard(b));
         }
     },
-    PAIR {
+    
+    /** pair. */
+    PAIR("Pair") {
         public boolean matches(Hand hand) {
             return PatternMatcher.numPairs(hand) >= 1;
         }
@@ -21,7 +29,9 @@ public enum Pattern
             return aHighCard.compareTo(bHighCard);
         }
     },
-    TWOPAIR {
+    
+    /** twopair. */
+    TWOPAIR("Two pair") {
         public boolean matches(Hand hand) {
             return PatternMatcher.hasTwoPair(hand);
         }
@@ -39,7 +49,9 @@ public enum Pattern
             return NONE.breakTie(a,b);
         }
     },
-    THREEOFKIND {
+    
+    /** threeofkind. */
+    THREEOFKIND("Three of a kind") {
         public boolean matches(Hand hand) {
             return PatternMatcher.hasThreeOfAKind(hand);
         }
@@ -52,7 +64,9 @@ public enum Pattern
             return NONE.breakTie(a,b);
         }
     },
-    STRAIGHT {
+    
+    /** straight. */
+    STRAIGHT("Straight") {
         public boolean matches(Hand hand) {
             return PatternMatcher.isStraight(hand);
         }
@@ -62,7 +76,9 @@ public enum Pattern
             return aHighCard.compareTo(bHighCard);
         }
     },
-    FLUSH {
+    
+    /** flush. */
+    FLUSH("Flush") {
         public boolean matches(Hand hand) {
             return PatternMatcher.isFlush(hand);
         }
@@ -70,7 +86,9 @@ public enum Pattern
             return NONE.breakTie(a,b);
         }
     },
-    FULLHOUSE {
+    
+    /** fullhouse. */
+    FULLHOUSE("Full house") {
         public boolean matches(Hand hand) {
             return PatternMatcher.hasFullHouse(hand);
         }
@@ -91,7 +109,9 @@ public enum Pattern
             return 0;
         }
     },
-    FOUROFKIND {
+    
+    /** fourofkind. */
+    FOUROFKIND("Four of a kind") {
         public boolean matches(Hand hand) {
             return PatternMatcher.hasFourOfAKind(hand);
         }
@@ -101,7 +121,9 @@ public enum Pattern
             return aValue.compareTo(bValue);
         }
     },
-    STRAIGHTFLUSH {
+    
+    /** straightflush. */
+    STRAIGHTFLUSH("Straight flush") {
         public boolean matches(Hand hand) {
             return PatternMatcher.isStraightFlush(hand);
         }
@@ -109,7 +131,42 @@ public enum Pattern
             return NONE.breakTie(a, b);
         }
     };
+    
+    /**
+     * Matches.
+     *
+     * @param hand the hand
+     * @return true, if successful
+     */
     abstract boolean matches(Hand hand);
+    
+    /**
+     * Break tie.
+     *
+     * @param a the a
+     * @param b the b
+     * @return the int
+     */
     abstract int breakTie(Hand a, Hand b);
-    String readableName;
+    
+    /** readable name. */
+    private String mReadableName;
+    
+    /**
+     * Instantiates a new pattern.
+     *
+     * @param readableName the readable name
+     */
+    Pattern(String readableName) {
+    	mReadableName = readableName;
+    }
+    
+    /**
+     * Gets the readable name.
+     *
+     * @return the readable name
+     */
+    public String getReadableName() {
+    	return mReadableName;
+    }
 }

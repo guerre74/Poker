@@ -12,17 +12,46 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CardView.
+ */
 public class CardView extends JPanel {
+	
+	/** The Constant DOWN_CARD_URL. */
 	private final static String DOWN_CARD_URL = "images/back.GIF";
+	
+	/** The up image. */
 	private Image mUpImage;
+	
+	/** The down image. */
 	private Image mDownImage;
+	
+	/** The original up image. */
 	private Image mOriginalUpImage;
+	
+	/** The original down image. */
 	private Image mOriginalDownImage;
+	
+	/** The player pane. */
 	private PlayerPane mPlayerPane;
+	
+	/** The mouse adapter. */
 	private MouseAdapter mMouseAdapter;
+	
+	/** The card. */
 	private Card mCard;
+	
+	/** Is up. */
 	private boolean mIsUp;
 
+	/**
+	 * Instantiates a new card view.
+	 *
+	 * @param card the card
+	 * @param upImage the up image
+	 * @param downImage the down image
+	 */
 	private CardView(Card card, BufferedImage upImage, BufferedImage downImage) {
 		mCard = card;
 		mOriginalUpImage = upImage;
@@ -33,6 +62,9 @@ public class CardView extends JPanel {
 		this.repaint();
 	}
 
+	/**
+	 * Scale image.
+	 */
 	public void scaleImage() {
 		if (getHeight() == 0) {
 			mDownImage = mOriginalDownImage.getScaledInstance(71, 96, Image.SCALE_FAST);
@@ -45,6 +77,12 @@ public class CardView extends JPanel {
 				getHeight() * 9 / 10, Image.SCALE_FAST) : null);
 	}
 
+	/**
+	 * Make card view.
+	 *
+	 * @param card the card
+	 * @return the card view
+	 */
 	public static CardView makeCardView(Card card) {
 		try {
 			BufferedImage upImage = ImageIO.read(new File("images/" + card.getImagePath()));
@@ -56,6 +94,11 @@ public class CardView extends JPanel {
 		return null;
 	}
 
+	/**
+	 * Make card view.
+	 *
+	 * @return the card view
+	 */
 	public static CardView makeCardView() {
 		try {
 			BufferedImage upImage = null;
@@ -66,6 +109,12 @@ public class CardView extends JPanel {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
+	/**
+	 * Paint card up or down image
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -74,6 +123,11 @@ public class CardView extends JPanel {
 		g.drawImage((mIsUp && mUpImage != null ? mUpImage : mDownImage), (getWidth() - width) / 2, yPos, this);
 	}
 
+	/**
+	 * Sets isUp.
+	 *
+	 * @param isUp the new checks if is up
+	 */
 	public void setIsUp(boolean isUp) {
 		if (this.mUpImage == null && isUp == true)
 			return;
@@ -81,6 +135,12 @@ public class CardView extends JPanel {
 		redraw();
 	}
 
+	/**
+	 * Sets the card.
+	 *
+	 * @param card the card
+	 * @return true, if successful
+	 */
 	public boolean setCard(Card card) {
 		if (card == null) {
 			mCard = null;
@@ -103,6 +163,11 @@ public class CardView extends JPanel {
 
 	}
 
+	/**
+	 * Sets the checks if is selected.
+	 *
+	 * @param isSelected the new checks if is selected
+	 */
 	public void setIsSelected(boolean isSelected) {
 		if (isSelected) {
 			this.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
@@ -112,16 +177,31 @@ public class CardView extends JPanel {
 		redraw();
 	}
 
+	/**
+	 * Redraw.
+	 * 
+	 * Revalidates, repaints, and scales
+	 */
 	public void redraw() {
 		scaleImage();
 		this.revalidate();
 		this.repaint();
 	}
 
+	/**
+	 * Gets the card.
+	 *
+	 * @return the card
+	 */
 	public Card getCard() {
 		return mCard;
 	}
 
+	/**
+	 * Observes clicks.
+	 *
+	 * @param parent the parent PlayerPane
+	 */
 	public void observeClicks(PlayerPane parent) {
 		mMouseAdapter = new MouseAdapter() {
 
@@ -133,6 +213,9 @@ public class CardView extends JPanel {
 		this.addMouseListener(mMouseAdapter);
 	}
 
+	/**
+	 * Removes the click observer.
+	 */
 	public void removeClickObserver() {
 		this.removeMouseListener(mMouseAdapter);
 	}

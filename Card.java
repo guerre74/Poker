@@ -1,164 +1,350 @@
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Card.
+ */
 public class Card {
-    public enum Suit {
-        SPADES(CardColor.BLACK, 's'), 
 
-        DIAMONDS(CardColor.RED, 'd'), 
+	/**
+	 * The Enum Suit.
+	 */
+	public enum Suit {
 
-        CLUBS(CardColor.BLACK, 'c'), 
+		/** The spades. */
+		SPADES(CardColor.BLACK, 's'),
 
-        HEARTS(CardColor.RED, 'h');
+		/** The diamonds. */
+		DIAMONDS(CardColor.RED, 'd'),
 
-        Suit(CardColor color, char charValue) {
-            mColor = color;
-            mCharValue = charValue;
-        }
+		/** The clubs. */
+		CLUBS(CardColor.BLACK, 'c'),
 
-        public String getStringValue() {
-        	return name().toLowerCase();
-        }
-        
-        public CardColor getColor() {
-            return mColor;
-        }
+		/** The hearts. */
+		HEARTS(CardColor.RED, 'h');
 
-        public char getCharValue() {
-            return mCharValue;
-        }
+		/**
+		 * Instantiates a new suit.
+		 *
+		 * @param color
+		 *            the colour of the suit
+		 * @param charValue
+		 *            the char value of the suit
+		 */
+		Suit(CardColor color, char charValue) {
+			mColor = color;
+			mCharValue = charValue;
+		}
 
-        public static Suit fromChar(char charValue) {
-            for(Suit suit : values()) {
-                if(suit.getCharValue() == charValue) {
-                    return suit;
-                }
-            }
-            return Suit.DIAMONDS;
-        }
+		/**
+		 * Gets the string value.
+		 *
+		 * @return the string value
+		 */
+		public String getStringValue() {
+			return name().toLowerCase();
+		}
 
-        private CardColor mColor;
-        private char mCharValue;
-    }
-    public enum CardColor {
-        RED, BLACK;
-    }
-    public enum CardValue {
+		/**
+		 * Gets the colour.
+		 *
+		 * @return the colour
+		 */
+		public CardColor getColor() {
+			return mColor;
+		}
 
-        TWO(2, false, '2'), 
+		/**
+		 * Gets the char value.
+		 *
+		 * @return the char value
+		 */
+		public char getCharValue() {
+			return mCharValue;
+		}
 
-        THREE(3, false, '3'), 
+		/**
+		 * Creates a Suit from char.
+		 *
+		 * @param charValue
+		 *            the char value
+		 * @return the suit
+		 */
+		public static Suit fromChar(char charValue) {
+			for (Suit suit : values()) {
+				if (suit.getCharValue() == charValue) {
+					return suit;
+				}
+			}
+			return Suit.DIAMONDS;
+		}
 
-        FOUR(4, false, '4'), 
+		/** The color. */
+		private CardColor mColor;
 
-        FIVE(5, false, '5'), 
+		/** The char value. */
+		private char mCharValue;
+	}
 
-        SIX(6, false, '6'), 
+	/**
+	 * The Enum CardColor.
+	 */
+	public enum CardColor {
 
-        SEVEN(7, false, '7'), 
+		/** Red. */
+		RED,
+		/** Black. */
+		BLACK;
+	}
 
-        EIGHT(8, false, '8'), 
+	/**
+	 * The Enum CardValue.
+	 */
+	public enum CardValue {
 
-        NINE(9, false, '9'), 
+		/** two. */
+		TWO(2, false, '2'),
 
-        TEN(10, false, '0'), 
+		/** three. */
+		THREE(3, false, '3'),
 
-        JACK(11, true, 'J', "jack"), 
+		/** four. */
+		FOUR(4, false, '4'),
 
-        QUEEN(12, true, 'Q', "queen"), 
+		/** five. */
+		FIVE(5, false, '5'),
 
-        KING(13, true, 'K', "king"),
+		/** six. */
+		SIX(6, false, '6'),
 
-        ACE(0, false, 'A', "ace");
+		/** seven. */
+		SEVEN(7, false, '7'),
 
-        int mIntegerValue;
-        boolean mIsFaceCard;
-        char mCharValue;
-        String mCardName;
+		/** eight. */
+		EIGHT(8, false, '8'),
 
-        CardValue(int integerValue, boolean isFaceCard, char charValue) {
-            mIntegerValue = integerValue;
-            mIsFaceCard = isFaceCard;
-            mCharValue = charValue;
-            mCardName = String.valueOf(integerValue);
-        }
-        
-        CardValue(int integerValue, boolean isFaceCard, char charValue, String cardName) {
-            mIntegerValue = integerValue;
-            mIsFaceCard = isFaceCard;
-            mCharValue = charValue;
-            mCardName = cardName;
-        }
+		/** nine. */
+		NINE(9, false, '9'),
 
-        public boolean getIsFaceCard() {
-            return mIsFaceCard;
-        }
+		/** ten. */
+		TEN(10, false, '0'),
 
-        public int getIntegerValue() {
-            return mIntegerValue;
-        }
+		/** jack. */
+		JACK(11, true, 'J', "jack"),
 
-        public char getCharValue() {
-            return mCharValue;
-        }
+		/** queen. */
+		QUEEN(12, true, 'Q', "queen"),
 
-        public static CardValue fromChar(char charValue) {
-            for(CardValue value : values()) {
-                if(value.getCharValue() == charValue) {
-                    return value;
-                }
-            }
-            return CardValue.TWO;
-        }
-        
-        public String getCardName() {
-        	return mCardName;
-        }
-    }
-    private Suit mSuit;
-    private CardValue mValue;
+		/** king. */
+		KING(13, true, 'K', "king"),
 
-    public Card(Suit suit, CardValue value) {
-        mSuit = suit;
-        mValue = value;
-    }
+		/** ace. */
+		ACE(0, false, 'A', "ace");
 
-    public Suit getSuit() {
-        return mSuit;
-    }
+		/** m integer value. */
+		int mIntegerValue;
 
-    public CardValue getValue() {
-        return mValue;
-    }
+		/**  is face card. */
+		boolean mIsFaceCard;
 
-    public void setValue(CardValue value) {
-        mValue = value;
-    }
+		/**  char value. */
+		char mCharValue;
 
-    public void setSuit(Suit suit) {
-        mSuit = suit;
-    }
+		/**  card name. */
+		String mCardName;
 
-    public String toString() {
-        return Character.toString(mValue.getCharValue()) + Character.toString(mSuit.getCharValue());
-    }
+		/**
+		 * Instantiates a new card value.
+		 *
+		 * @param integerValue
+		 *            the integer value
+		 * @param isFaceCard
+		 *            the is face card
+		 * @param charValue
+		 *            the char value
+		 */
+		CardValue(int integerValue, boolean isFaceCard, char charValue) {
+			mIntegerValue = integerValue;
+			mIsFaceCard = isFaceCard;
+			mCharValue = charValue;
+			mCardName = String.valueOf(integerValue);
+		}
 
-    public static Card fromString(String stringValue) {
-        if(stringValue.length() != 2) return null;
+		/**
+		 * Instantiates a new card value.
+		 *
+		 * @param integerValue
+		 *            the integer value
+		 * @param isFaceCard
+		 *            the is face card
+		 * @param charValue
+		 *            the char value
+		 * @param cardName
+		 *            the card name
+		 */
+		CardValue(int integerValue, boolean isFaceCard, char charValue, String cardName) {
+			mIntegerValue = integerValue;
+			mIsFaceCard = isFaceCard;
+			mCharValue = charValue;
+			mCardName = cardName;
+		}
 
-        char valueChar = stringValue.charAt(0);
-        char suitChar = stringValue.charAt(1);
+		/**
+		 * Gets the checks if is face card.
+		 *
+		 * @return the checks if is face card
+		 */
+		public boolean getIsFaceCard() {
+			return mIsFaceCard;
+		}
 
-        return new Card(Suit.fromChar(suitChar), CardValue.fromChar(valueChar));
-    }
+		/**
+		 * Gets the integer value.
+		 *
+		 * @return the integer value
+		 */
+		public int getIntegerValue() {
+			return mIntegerValue;
+		}
 
-    public boolean equals(Card other) {
-        if(other == null) return false;
-        return toString().equals(other.toString());
-    }
-    
-    public String getImagePath() {
-    	String cardName = mValue.getCardName();
-    	String cardSuit = mSuit.getStringValue();
-    	String ending = ".GIF";
-    	return cardName + cardSuit + ending;
-    }
-    
+		/**
+		 * Gets the char value.
+		 *
+		 * @return the char value
+		 */
+		public char getCharValue() {
+			return mCharValue;
+		}
+
+		/**
+		 * From char.
+		 *
+		 * @param charValue
+		 *            the char value
+		 * @return the card value
+		 */
+		public static CardValue fromChar(char charValue) {
+			for (CardValue value : values()) {
+				if (value.getCharValue() == charValue) {
+					return value;
+				}
+			}
+			return CardValue.TWO;
+		}
+
+		/**
+		 * Gets the card name.
+		 *
+		 * @return the card name
+		 */
+		public String getCardName() {
+			return mCardName;
+		}
+	}
+
+	/**  suit. */
+	private Suit mSuit;
+
+	/**  value. */
+	private CardValue mValue;
+
+	/**
+	 * Instantiates a new card.
+	 *
+	 * @param suit
+	 *            the suit
+	 * @param value
+	 *            the value
+	 */
+	public Card(Suit suit, CardValue value) {
+		mSuit = suit;
+		mValue = value;
+	}
+
+	/**
+	 * Gets the suit.
+	 *
+	 * @return the suit
+	 */
+	public Suit getSuit() {
+		return mSuit;
+	}
+
+	/**
+	 * Gets the value.
+	 *
+	 * @return the value
+	 */
+	public CardValue getValue() {
+		return mValue;
+	}
+
+	/**
+	 * Sets the value.
+	 *
+	 * @param value
+	 *            the new value
+	 */
+	public void setValue(CardValue value) {
+		mValue = value;
+	}
+
+	/**
+	 * Sets the suit.
+	 *
+	 * @param suit
+	 *            the new suit
+	 */
+	public void setSuit(Suit suit) {
+		mSuit = suit;
+	}
+
+	/**
+	 * Return a string value of the Card
+	 * @return String value of the card
+	 */
+	public String toString() {
+		return Character.toString(mValue.getCharValue()) + Character.toString(mSuit.getCharValue());
+	}
+
+	/**
+	 * From string.
+	 *
+	 * @param stringValue
+	 *            the string value
+	 * @return the card
+	 */
+	public static Card fromString(String stringValue) {
+		if (stringValue.length() != 2)
+			return null;
+
+		char valueChar = stringValue.charAt(0);
+		char suitChar = stringValue.charAt(1);
+
+		return new Card(Suit.fromChar(suitChar), CardValue.fromChar(valueChar));
+	}
+
+	/**
+	 * Equals.
+	 *
+	 * @param other
+	 *            the other
+	 * @return true, if successful
+	 */
+	public boolean equals(Card other) {
+		if (other == null)
+			return false;
+		return toString().equals(other.toString());
+	}
+
+	/**
+	 * Gets the image path.
+	 *
+	 * @return the image path
+	 */
+	public String getImagePath() {
+		String cardName = mValue.getCardName();
+		String cardSuit = mSuit.getStringValue();
+		String ending = ".GIF";
+		return cardName + cardSuit + ending;
+	}
+
 }

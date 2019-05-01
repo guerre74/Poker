@@ -5,14 +5,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HumanPlayer.
+ */
 public class HumanPlayer extends Player {
+    
+    /* (non-Javadoc)
+     * @see Player#discard(Poker)
+     */
     public List<Card> discard(Poker poker) {
         return new ArrayList<>();
     }
+    
+    /**
+     * Discard.
+     *
+     * @param poker the poker
+     * @param humanCardRunnable the human card runnable
+     */
     public void discard(Poker poker, HumanCardDiscardRunnable humanCardRunnable) {
-    	System.out.println("New round: \n");
-        System.out.print("\tHere is your hand:\t");
-        System.out.println(getHand());
+    	
         
         List<Card> toDiscard = new ArrayList<>();
 
@@ -30,7 +43,17 @@ public class HumanPlayer extends Player {
     }
     
     
+    /**
+     * The Interface HumanCardDiscardRunnable.
+     * Basically Runnable but for cards; allows for asynchronous discarding of cards
+     */
     public interface HumanCardDiscardRunnable {
-    	void run(List<Card> cards);
+    	
+	    /**
+	     * Run.
+	     *
+	     * @param cards the cards to run
+	     */
+	    void run(List<Card> cards);
     }
 }
