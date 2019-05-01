@@ -1,0 +1,201 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+
+public final class PatternMatcher {
+
+    public static List<Pattern> match(Hand hand) {
+        List<Pattern> patterns = new ArrayList<>();
+        for(Pattern pattern : Pattern.values()) {
+            if(pattern.matches(hand)) {
+                patterns.add(pattern);
+            }
+        }
+        return patterns;
+    }
+
+    public static boolean isStraightFlush(Hand hand) {
+        return isStraight(hand) && isFlush(hand);
+    }
+
+    public static boolean isFlush(Hand hand) {
+        if(hand.isEmpty() || !hand.isCompliant()) return false;
+        boolean isFlush = true;
+        Card lastCard = null;
+        for(Card card : hand.getCards()) {
+            if(lastCard == null) {
+                lastCard = card; continue;
+            }
+            if(lastCard.getSuit() != card.getSuit()) {
+                isFlush = false;
+                break;
+            }
+            lastCard = card;
+        }
+        return isFlush;
+    }
+
+    public static boolean isStraight(Hand hand) {
+        if(hand.isEmpty() || !hand.isCompliant()) return false;
+
+        List<Card> tempCards = new ArrayList<>();
+        tempCards.addAll(hand.getCards());
+        int numAces = 0;
+        Card ace = null;
+
+        Iterator<Card> cardIterator = tempCards.iterator();
+        while(cardIterator.hasNext()) {
+            Card nextCard = cardIterator.next();
+            if(nextCard.getValue() == Card.CardValue.ACE) {ace = nextCard; numAces++; cardIterator.remove(); }
+        }
+
+        if(numAces > 1) return false;
+
+        sortByValue(tempCards);
+        for(int cardIndex = 1; cardIndex < tempCards.size(); cardIndex++) {
+            if(!areSequential(tempCards.get(cardIndex - 1), tempCards.get(cardIndex))) {
+                return false;
+            }
+        }
+
+        if(numAces == 0) return true;
+
+        if(areSequential(ace, tempCards.get(0)) || areSequential(tempCards.get(tempCards.size() - 1), ace)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    static boolean areSequential(Card lowCard, Card highCard) {
+        if(lowCard.getValue() == Card.CardValue.ACE) {
+            return highCard.getValue() == Card.CardValue.TWO;
+        }
+        if(highCard.getValue() == Card.CardValue.ACE) {
+            return lowCard.getValue() == Card.CardValue.KING;
+        }
+        return highCard.getValue().getIntegerValue() == lowCard.getValue().getIntegerValue() + 1;
+    }
+
+    public static boolean hasFullHouse(Hand hand) {
+        return numPairs(hand) == 2 && hasThreeOfAKind(hand);
+    }
+    
+    public static Card.CardValue[] getFullHouseValues(Hand hand) {
+        Card.CardValue[] values = new Card.CardValue[2];
+        int threeOfAKindPair = -1;
+        for(int i = 0; i < 2; i++) {
+            if(getThreeOfAKindValue(hand).equals(getPairValue(hand, i))) {
+                threeOfAKindPair = i;
+            }
+        }
+        values[0] = getPairValue(hand, threeOfAKindPair);
+        values[1] = getPairValue(hand, 1 - threeOfAKindPair);
+        return values;
+    }
+
+    public static boolean hasFourOfAKind(Hand hand) {
+        return numPairs(hand) == 2 && 
+        (getPairValue(hand, 0)
+            .equals(getPairValue(hand, 1)));
+    }
+    
+    public static Card.CardValue getFourOfAKindValue(Hand hand) {
+        return getPairValue(hand, 0);
+    }
+
+    public static boolean hasTwoPair(Hand hand) {
+        return numPairs(hand) == 2;
+    }
+
+    public static boolean hasThreeOfAKind(Hand hand) {
+        if(hand.isEmpty() || !hand.isCompliant()) return false;
+        List<Card> cards = hand.getCards();
+        sortByValue(cards);
+        for(int cardIndex = 2; cardIndex < cards.size(); cardIndex++) {
+            Card currentCard = cards.get(cardIndex);
+            Card lastCard = cards.get(cardIndex - 1);
+            Card nextLastCard = cards.get(cardIndex - 2);
+            Card nextCard = (cardIndex < cards.size() - 1) ? cards.get(cardIndex + 1) : null;
+            if(currentCard == null || lastCard == null || nextLastCard == null) continue;
+            if(currentCard.getValue().equals(lastCard.getValue()) && lastCard.getValue().equals(nextLastCard.getValue()) && !currentCard.getValue().equals(nextCard)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Card.CardValue getThreeOfAKindValue(Hand hand) {
+        if(hand.isEmpty() || !hand.isCompliant() || !hasThreeOfAKind(hand)) return null;
+        List<Card> cards = hand.getCards();
+        sortByValue(cards);
+        for(int cardIndex = 2; cardIndex < cards.size(); cardIndex++) {
+            Card currentCard = cards.get(cardIndex);
+            Card lastCard = cards.get(cardIndex - 1);
+            Card nextLastCard = cards.get(cardIndex - 2);
+            if(currentCard == null || lastCard == null || nextLastCard == null) continue;
+            if(currentCard.getValue().equals(lastCard.getValue()) && lastCard.getValue().equals(nextLastCard.getValue())) {
+                return currentCard.getValue();
+            }
+        }
+        return null;
+    }
+
+    public static int numPairs(Hand hand) {
+        if(hand.isEmpty() || !hand.isCompliant()) return 0;
+        int numPairs = 0;
+        List<Card> cards = hand.getCards();
+        sortByValue(cards);
+        Card lastCard = null;
+        for(Card card : hand.getCards()) {
+            if(lastCard == null) {
+                lastCard = card;
+                continue;
+            }
+            if(lastCard.getValue() == card.getValue()) {
+                numPairs++;
+                lastCard = null;
+                continue;
+            }
+            lastCard = card;
+        }
+        return numPairs;
+    }
+
+    public static Card.CardValue getPairValue(Hand hand, int pairNum) {
+        if(hand.isEmpty() || !hand.isCompliant()) return null;
+        boolean isEnoughPairs = numPairs(hand) > pairNum && pairNum >= 0;
+        if(!isEnoughPairs) return null;
+        List<Card> cards = hand.getCards();
+        sortByValue(cards);
+        Card lastCard = null;
+        for(Card card : hand.getCards()) {
+            if(lastCard == null) {
+                lastCard = card;
+                continue;
+            }
+            if(lastCard.getValue().equals(card.getValue())) {
+                if(pairNum == 0) return card.getValue();
+                pairNum--;
+                lastCard = null;
+                continue;
+            }
+            lastCard = card;
+        }
+        return null;
+    }
+
+    public static Card.CardValue highCard(Hand hand) {
+        sortByValue(hand.getCards());
+        return hand.getCards().get(hand.getCards().size() - 1).getValue();
+    }
+
+    public static void sortByValue(List<Card> cards) {
+        cards.sort(new Comparator<Card>() {
+                public int compare(Card a, Card b) {
+                    return a.getValue().compareTo(b.getValue());
+                }
+            });
+    }
+}

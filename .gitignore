@@ -1,0 +1,6 @@
+.classpath
+.project
+*.class
+*.ctxt
+Thumbs.db
+.DS_Store
